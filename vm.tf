@@ -56,5 +56,5 @@ resource "azurerm_virtual_machine" "virtual_machine" {
 }
 
 output "virtual_machine_ids" {
-  value = virtual_machine.*.id
+  value = azurerm_virtual_machine.virtual_machine.*.id
 }
