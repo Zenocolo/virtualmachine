@@ -21,7 +21,7 @@ resource "azurerm_network_interface" "eu-nic-project1" {
 }
 
 resource "azurerm_virtual_machine" "eu-vm-project1" {
-  name                  = "${local.prefix-eu}-vm-project1"
+  name                  = "${local.prefix}-vm-project1"
   location              = var.location
   resource_group_name   = var.rg-name
   network_interface_ids = [azurerm_network_interface.eu-nic-project1.id]
