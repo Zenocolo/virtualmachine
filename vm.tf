@@ -26,17 +26,16 @@ resource "azurerm_windows_virtual_machine" "virtual_machine" {
   location              = var.location
   resource_group_name   = var.rg-name
   network_interface_ids = [element(azurerm_network_interface.network_card.*.id, count.index)]
-  vm_size               = var.vmsize
+  size               = var.vmsize
   admin_username = var.username
   admin_password = var.password
   provision_vm_agent = true
   allow_extension_operations = true
   enable_automatic_updates = false
   encryption_at_host_enabled = true
-  delete_os_disk_on_termination = true
   count = var.vmcount
 
-  storage_image_reference {
+  source_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
     sku       = "2019-Datacenter"
@@ -45,7 +44,7 @@ resource "azurerm_windows_virtual_machine" "virtual_machine" {
 
   os_disk {
     caching           = "ReadWrite"
-    managed_disk_type = "Standard_LRS"
+    storage_account_type = "Standard_LRS"
   }
   tags = local.tags
 }
