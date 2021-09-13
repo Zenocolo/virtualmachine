@@ -48,6 +48,7 @@ resource "azurerm_virtual_machine" "virtual_machine" {
     computer_name  = "${local.prefix}-vm-${var.project_name}${count.index}"
     admin_username = var.username
     admin_password = var.password
+    allowExtensionOperations= true
   }
 
   os_profile_windows_config {
