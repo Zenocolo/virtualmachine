@@ -54,3 +54,7 @@ resource "azurerm_virtual_machine" "virtual_machine" {
 
   tags = local.tags
 }
+
+output "virtual_machine_ids" {
+  value = virtual_machine.*.id
+}
