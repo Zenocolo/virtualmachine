@@ -12,7 +12,7 @@ resource "azurerm_network_interface" "network_card" {
   location             = var.location
   resource_group_name  = var.rg-name
   enable_ip_forwarding = true
-  count = var.count
+  count = var.vmcount
 
   ip_configuration {
     name                          = "ipconfig-${var.project_name}-${var.count}"
@@ -28,12 +28,12 @@ resource "azurerm_virtual_machine" "virtual_machine" {
   network_interface_ids = [element(azurerm_network_interface.network_card.*.id, count.index)]
   vm_size               = var.vmsize
   delete_os_disk_on_termination = true
-  count = var.count
+  count = var.vmcount
 
   storage_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
-    sku       = "2016-Datacenter"
+    sku       = "2019-Datacenter"
     version   = "latest"
   }
 
