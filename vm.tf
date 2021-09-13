@@ -50,7 +50,9 @@ resource "azurerm_virtual_machine" "virtual_machine" {
     admin_password = var.password
   }
 
-  os_profile_windows_config {}
+  os_profile_windows_config {
+    provision_vm_agent = true
+  }
 
   tags = local.tags
 }
