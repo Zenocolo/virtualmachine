@@ -7,7 +7,7 @@ locals {
   }
 }
 
-resource "azurerm_network_interface" "eu-nic-project1" {
+resource "azurerm_network_interface" "network_card" {
   name                 = "nic-project1"
   location             = var.location
   resource_group_name  = var.rg-name
@@ -20,11 +20,11 @@ resource "azurerm_network_interface" "eu-nic-project1" {
   }
 }
 
-resource "azurerm_virtual_machine" "eu-vm-project1" {
+resource "azurerm_virtual_machine" "virtual_machine" {
   name                  = "${local.prefix}-vm-project1"
   location              = var.location
   resource_group_name   = var.rg-name
-  network_interface_ids = [azurerm_network_interface.eu-nic-project1.id]
+  network_interface_ids = [azurerm_network_interface.network_card.id]
   vm_size               = var.vmsize
   delete_os_disk_on_termination = true
 
