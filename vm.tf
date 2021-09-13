@@ -22,7 +22,7 @@ resource "azurerm_network_interface" "network_card" {
 }
 
 resource "azurerm_virtual_machine" "virtual_machine" {
-  name                  = "${local.prefix}-vm-${var.project_name}${count.index}"
+  name                  = "${local.prefix}-vm-${var.project_name}-${count.index}"
   location              = var.location
   resource_group_name   = var.rg-name
   network_interface_ids = [element(azurerm_network_interface.network_card.*.id, count.index)]
