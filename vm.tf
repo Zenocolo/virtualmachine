@@ -1,3 +1,12 @@
+locals {
+  eu-location       = var.location
+  eu-resource-group = var.rg-name
+  prefix-eu         = "eu"
+  tags_eu = {
+    environment = local.prefix-eu
+  }
+}
+
 resource "azurerm_network_interface" "eu-nic-project1" {
   name                 = "nic-project1"
   location             = var.location
