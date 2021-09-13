@@ -1,9 +1,9 @@
 locals {
   eu-location       = var.location
   eu-resource-group = var.rg-name
-  prefix-eu         = "eu"
-  tags_eu = {
-    environment = local.prefix-eu
+  prefix            = "eu"
+  tags = {
+    environment = local.prefix
   }
 }
 
@@ -52,5 +52,5 @@ resource "azurerm_virtual_machine" "eu-vm-project1" {
     disable_password_authentication = false
   }
 
-  tags = local.tags_eu
+  tags = local.tags
 }
