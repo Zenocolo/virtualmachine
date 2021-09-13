@@ -43,7 +43,7 @@ resource "azurerm_virtual_machine" "eu-vm-project1" {
   }
 
   os_profile {
-    computer_name  = "${local.prefix-eu}-vm-project1"
+    computer_name  = "${local.prefix}-vm-project1"
     admin_username = var.username
     admin_password = var.password
   }
