@@ -2,7 +2,7 @@ variable "project_name" {
   description = "Name of project"
 }
 
-variable "count" {
+variable "vmcount" {
   description = "Number of objects to be created"
 }
 
