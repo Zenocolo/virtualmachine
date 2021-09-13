@@ -21,12 +21,18 @@ resource "azurerm_network_interface" "network_card" {
   }
 }
 
-resource "azurerm_virtual_machine" "virtual_machine" {
+resource "azurerm_windows_virtual_machine" "virtual_machine" {
   name                  = "${local.prefix}-vm-${var.project_name}-${count.index}"
   location              = var.location
   resource_group_name   = var.rg-name
   network_interface_ids = [element(azurerm_network_interface.network_card.*.id, count.index)]
   vm_size               = var.vmsize
+  admin_username = var.username
+  admin_password = var.password
+  provision_vm_agent = true
+  allow_extension_operations = true
+  enable_automatic_updates = false
+  encryption_at_host_enabled = true
   delete_os_disk_on_termination = true
   count = var.vmcount
 
@@ -37,28 +43,13 @@ resource "azurerm_virtual_machine" "virtual_machine" {
     version   = "latest"
   }
 
-  storage_os_disk {
-    name              = "myosdisk-${local.prefix}-vm-${var.project_name}${count.index}"
+  os_disk {
     caching           = "ReadWrite"
-    create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
   }
-
-  os_profile {
-    computer_name  = "${local.prefix}-vm-${var.project_name}${count.index}"
-    admin_username = var.username
-    admin_password = var.password
-    AllowExtensionOperations = true
-  }
-
-  os_profile_windows_config {
-    provision_vm_agent = true
-    enable_automatic_updates = false
-  }
-
   tags = local.tags
 }
 
 output "virtual_machine_ids" {
-  value = azurerm_virtual_machine.virtual_machine.*.id
+  value = azurerm_windows_virtual_machine.virtual_machine.*.id
 }
