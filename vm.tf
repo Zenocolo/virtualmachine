@@ -8,49 +8,49 @@ locals {
 }
 
 resource "azurerm_network_interface" "network_card" {
-  name                 = "nic-project1"
+  name                 = "nc-${var.project_name}-${var.count}"
   location             = var.location
   resource_group_name  = var.rg-name
   enable_ip_forwarding = true
+  count = var.count
 
   ip_configuration {
-    name                          = "ipconfig-project1"
+    name                          = "ipconfig-${var.project_name}-${var.count}"
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Dynamic"
   }
 }
 
 resource "azurerm_virtual_machine" "virtual_machine" {
-  name                  = "${local.prefix}-vm-project1"
+  name                  = "${local.prefix}-vm-${var.project_name}${count.index}"
   location              = var.location
   resource_group_name   = var.rg-name
-  network_interface_ids = [azurerm_network_interface.network_card.id]
+  network_interface_ids = [element(azurerm_network_interface.network_card.*.id, count.index)]
   vm_size               = var.vmsize
   delete_os_disk_on_termination = true
+  count = var.count
 
   storage_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2016-Datacenter"
     version   = "latest"
   }
 
   storage_os_disk {
-    name              = "myosdisk-project1"
+    name              = "myosdisk-${local.prefix}-vm-${var.project_name}${count.index}"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
   }
 
   os_profile {
-    computer_name  = "${local.prefix}-vm-project1"
+    computer_name  = "${local.prefix}-vm-${var.project_name}${count.index}"
     admin_username = var.username
     admin_password = var.password
   }
 
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
+  os_profile_windows_config {}
 
   tags = local.tags
 }
