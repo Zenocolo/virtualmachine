@@ -1,7 +1,7 @@
 resource "azurerm_network_interface" "eu-nic-project1" {
   name                 = "nic-project1"
-  location             = data.azurerm_resource_group.project1.location
-  resource_group_name  = data.azurerm_resource_group.project1.name
+  location             = var.location
+  resource_group_name  = var.rg-name
   enable_ip_forwarding = true
 
   ip_configuration {
@@ -13,8 +13,8 @@ resource "azurerm_network_interface" "eu-nic-project1" {
 
 resource "azurerm_virtual_machine" "eu-vm-project1" {
   name                  = "${local.prefix-eu}-vm-project1"
-  location              = data.azurerm_resource_group.project1.location
-  resource_group_name   = data.azurerm_resource_group.project1.name
+  location              = var.location
+  resource_group_name   = var.rg-name
   network_interface_ids = [azurerm_network_interface.eu-nic-project1.id]
   vm_size               = var.vmsize
   delete_os_disk_on_termination = true
