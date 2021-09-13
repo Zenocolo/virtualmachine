@@ -1,6 +1,4 @@
 locals {
-  eu-location       = var.location
-  eu-resource-group = var.rg-name
   prefix            = "eu"
   tags = {
     environment = local.prefix
