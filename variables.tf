@@ -1,3 +1,7 @@
+variable "project_name" {
+  description = "Name of project"
+}
+
 variable "count" {
   description = "Number of objects to be created"
 }
