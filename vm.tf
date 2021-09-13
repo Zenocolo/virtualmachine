@@ -44,3 +44,4 @@ resource "azurerm_virtual_machine" "eu-vm-project1" {
   }
 
   tags = local.tags_eu
+}
