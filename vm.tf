@@ -32,7 +32,8 @@ resource "azurerm_windows_virtual_machine" "virtual_machine" {
   provision_vm_agent = true
   allow_extension_operations = true
   enable_automatic_updates = false
-  encryption_at_host_enabled = true
+  #encryption_at_host_enabled = true
+  # disk_encryption_set_id 
   count = var.vmcount
 
   source_image_reference {
