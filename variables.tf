@@ -1,3 +1,7 @@
+variable "count" {
+  description = "Number of objects to be created"
+}
+
 variable "location" {
   description = "Location of the Resource Group"
 }
